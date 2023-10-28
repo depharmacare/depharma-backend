@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id                   String                 @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  products             Product[]
+  StoctRepresentations StoctRepresentations[]
+}
+
+model StoctRepresentations {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  categoryId   String?        @db.ObjectId
+  category     Category?      @relation(fields: [categoryId], references: [id])
+  ProductStock ProductStock[]
+}
+
+model Product {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  saltName        String
+  description     String
+  manufactureDate DateTime
+  ExpiryDate      DateTime
+  purchasePrice   Float
+  sellingPrice    Float
+  discount        Float
+  categoryId      String?        @db.ObjectId
+  category        Category?      @relation(fields: [categoryId], references: [id])
+  vendorId        String?        @db.ObjectId
+  vendor          Vendor?        @relation(fields: [vendorId], references: [id])
+  Alert           Alert[]
+  ProductStock    ProductStock[]
+  SaleItem        SaleItem[]
+}
+
+model ProductStock {
+  id                    String                @id @default(auto()) @map("_id") @db.ObjectId
+  quantity              Float
+  pricePerQty           Float
+  // packets   Float
+  // strips    Float
+  // tablets   Float
+  productId             String?               @db.ObjectId
+  stockRepresentationId String?               @db.ObjectId
+  product               Product?              @relation(fields: [productId], references: [id])
+  stockRepresentation   StoctRepresentations? @relation(fields: [stockRepresentationId], references: [id])
+  SaleItem              SaleItem[]
+}
+
+model Vendor {
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  distributers     Distributer[]
+  products         Product[]
+  cendorClearences VendorClearence[]
+}
+
+model Distributer {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  contact  String
+  vendorId String? @db.ObjectId
+  vendor   Vendor? @relation(fields: [vendorId], references: [id])
+}
+
+model VendorClearence {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  clearenceAmount Float
+  vendorId        String?  @db.ObjectId
+  vendor          Vendor?  @relation(fields: [vendorId], references: [id])
+  createdAt       DateTime @default(now()) @map("createdAt")
+  updatedAt       DateTime @updatedAt @map("updatedAt")
+}
+
+model AlertType {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  type  String
+  color String
+  Alert Alert[]
+}
+
+model Alert {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  alertTypeId String?    @db.ObjectId
+  alertType   AlertType? @relation(fields: [alertTypeId], references: [id])
+  productId   String?    @db.ObjectId
+  product     Product?   @relation(fields: [productId], references: [id])
+}
+
+model PaymentMethods {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  methodName String
+  Sales      Sales[]
+}
+
+model Sales {
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  customerName    String
+  contact         String
+  paymentMethodId String          @db.ObjectId
+  totalBill       Float
+  collectedAmount Float
+  returnAmount    Float
+  discount        Float
+  createdAt       DateTime        @default(now()) @map("createdAt")
+  updatedAt       DateTime        @updatedAt @map("updatedAt")
+  paymentMethod   PaymentMethods? @relation(fields: [paymentMethodId], references: [id])
+  SaleItem        SaleItem[]
+}
+
+model SaleItem {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId      String?  @db.ObjectId
+  saleId         String?  @db.ObjectId
+  productStockId String?  @db.ObjectId
+  quantity       Float
+  createdAt      DateTime @default(now()) @map("createdAt")
+  updatedAt      DateTime @updatedAt @map("updatedAt")
+
+  sale         Sales?        @relation(fields: [saleId], references: [id])
+  product      Product?      @relation(fields: [productId], references: [id])
+  productStock ProductStock? @relation(fields: [productStockId], references: [id])
+}
