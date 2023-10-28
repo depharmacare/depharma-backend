@@ -3,11 +3,17 @@ import { JwtService } from '@nestjs/jwt'
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt'
 import { CreateUserDto } from 'src/dto/create-users.dto';
+import { ResetPasswordDto } from 'src/dto/reset-password.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly userService: UsersService, private jwtService: JwtService) { }
+    constructor(
+        private readonly userService: UsersService,
+        private jwtService: JwtService,
+        private prismaService: PrismaService
+    ) { }
 
 
 
@@ -42,7 +48,7 @@ export class AuthService {
         return await this.userService.createUser(createUserDto)
     }
 
-    async forgetPasswordEmail(email: any) {
+    async forgetPasswordRequest(email: any) {
         const user = await this.userService.findByEmail(email)
 
         if (!user) {
@@ -52,9 +58,41 @@ export class AuthService {
 
         const generatedTokenForgotPassword = await this.userService.generatedTokenForgotPassword(user.email)
 
+        return { message: 'request successful', token: generatedTokenForgotPassword.token }
+    }
+
+    async resetPassword(resetPasswordDto: ResetPasswordDto) {
+        const saltOrRounds = 10;
+        const { token, oldPassword, newPassword } = resetPasswordDto
+
+        // Check token validity
+        const validToken = await this.prismaService.forgotPasswordRequests.findFirst({
+            where: {
+                token: token
+            }
+        })
+
+
+        if (!validToken) throw new HttpException('Invalid token', HttpStatus.BAD_REQUEST);
+
+
+        // Check Old Password valid
+        const user = await this.userService.findByEmail(validToken.email)
+        const oldPasswordValid = await bcrypt.compare(oldPassword, user.password)
+
+
+        if (!oldPasswordValid) throw new HttpException('Invalid old password', HttpStatus.BAD_REQUEST);
 
 
 
-        return generatedTokenForgotPassword
+        const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds)
+        const updatePassword = await this.prismaService.users.update({
+            where: { email: user.email },
+            data: { password: hashedPassword }
+        })
+
+
+
+        return { message: 'password updated successfully', updatePassword }
     }
 }

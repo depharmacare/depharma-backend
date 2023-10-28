@@ -71,7 +71,7 @@ export class UsersService {
         // User does not exist, create a new document
         return this.prismaService.forgotPasswordRequests.create({ data: { email: email, token: token } });
     }
-
+    
     async findByEmail(email: any) {
         const user = await this.prismaService.users.findUnique({
             where: { email }

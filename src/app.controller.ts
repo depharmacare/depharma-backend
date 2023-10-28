@@ -4,6 +4,8 @@ import { LocalAuthGaurd } from './auth/local-auth.gaurd';
 import { JwtAuthGaurd } from './auth/jwt-auth.gaurd';
 import { AuthService } from './auth/auth.service';
 import { CreateUserDto } from './dto/create-users.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService, private readonly authService: AuthService) { }
@@ -23,9 +25,16 @@ export class AppController {
 
 
   @Get('forget-password/:email')
-  async sendEmailFOrgetPassword(@Param() params): Promise<any> {
-    return this.authService.forgetPasswordEmail(params.email)
+  async forgetPasswordRequest(@Param() params): Promise<any> {
+    return this.authService.forgetPasswordRequest(params.email)
   }
+
+  @Post('reset-password')
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(resetPasswordDto)
+  }
+
+
 
   @UseGuards(JwtAuthGaurd)
   @Get()

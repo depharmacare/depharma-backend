@@ -16,7 +16,20 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [PrismaModule, CategoriesModule, ProductModule, VendorModule, DistributerModule, AnalyticCardsModule, AlertTypeModule, InventoryByCategoryModule, PaymentMethodsModule, SalesModule, UsersModule, AuthModule],
+  imports: [
+    PrismaModule,
+    CategoriesModule,
+    ProductModule,
+    VendorModule,
+    DistributerModule,
+    AnalyticCardsModule,
+    AlertTypeModule,
+    InventoryByCategoryModule,
+    PaymentMethodsModule,
+    SalesModule,
+    UsersModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService, AnalyticCardsService],
 })
