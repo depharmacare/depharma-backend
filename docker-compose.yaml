@@ -1,0 +1,10 @@
+version: '1'
+
+services:
+  backened:
+    build: ./
+    container_name: backened-pos-apis
+    environment:
+      - DATABASE_URL=mongodb+srv://dbAdmin:0Ycz30XNYx3D2Nsw@sales.g0fa0ll.mongodb.net/Sales
+    ports:
+      - '3000:3000'
