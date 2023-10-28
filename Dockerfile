@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN nom run build
+RUN npm run build
 
 #prod stage
 FROM node:18-alpine
