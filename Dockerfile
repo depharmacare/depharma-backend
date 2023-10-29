@@ -4,6 +4,7 @@ FROM node:18-alpine AS Build
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY prisma ./prisma/ 
 
 RUN npm install
 
