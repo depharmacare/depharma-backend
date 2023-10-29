@@ -8,10 +8,10 @@ COPY package*.json ./
 RUN npm install
 
 # Generate the Prisma client
-RUN npx prisma generate
 
 COPY . .
 
+RUN npx prisma generate dev
 
 RUN npm run build
 
