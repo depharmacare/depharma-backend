@@ -8,14 +8,11 @@ COPY package*.json ./
 
 RUN npm install
 
-# Generate the Prisma client
-
 COPY . .
 
 RUN npx prisma generate dev
 
 RUN npm run build
-# CMD [ "node" , "dist/main" ]
 
 #prod stage
 FROM node:18-alpine
@@ -30,10 +27,13 @@ COPY --from=build /usr/src/app/dist ./dist
 
 COPY package*.json ./
 
-RUN npm install --only=production
+RUN npm install
+
 RUN npx prisma generate dev
+
 RUN rm package*.json
 
 EXPOSE 3000
+
 
 CMD [ "node" , "dist/main.js" ]
