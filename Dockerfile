@@ -1,46 +1,26 @@
-# Build Stage
-FROM node:18-alpine AS Build
+FROM node:12 AS builder
 
-WORKDIR /usr/src/app
+# Create app directory
+WORKDIR /app
 
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
+COPY prisma ./prisma/
 
-# Install Prisma CLI
-RUN npm install -g prisma
-
-# Install project dependencies
+# Install app dependencies
 RUN npm install
+# Generate prisma client, leave out if generating in `postinstall` script
+RUN npx prisma generate
 
 COPY . .
 
-# Generate Prisma types
-RUN npx prisma generate
-
 RUN npm run build
 
-# Prod Stage
-FROM node:18-alpine
+FROM node:12
 
-WORKDIR /usr/src/app
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-COPY --from=Build /usr/src/app/dist ./dist
-
-COPY package*.json ./
-
-# Install Prisma CLI (if you need it in the production stage)
-RUN npm install -g prisma
-
-# Install production dependencies (without dev dependencies)
-RUN npm install --only=production
-
-# Prisma generation in the production stage
-RUN npx prisma generate
-
-RUN rm package*.json
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
 
 EXPOSE 3000
-
-CMD [ "node", "dist/main.js" ]
+CMD ["npm", "run", "start:prod"]
