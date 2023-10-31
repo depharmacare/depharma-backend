@@ -9,7 +9,3 @@ services:
       - DATABASE_URL=mongodb+srv://dbAdmin:0Ycz30XNYx3D2Nsw@sales.g0fa0ll.mongodb.net/Sales
     ports:
       - '3000:3000'
-  prisma:
-    build:
-      context: ./
-      dockerfile: Dockerfile.prisma
