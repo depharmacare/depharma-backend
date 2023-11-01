@@ -1,8 +1,9 @@
 version: '3'
 
 services:
-  backened:
-    build: ./
+  backend:
+    build:
+      context: ./
     container_name: backened-pos-apis
     environment:
       - PORT=3000
