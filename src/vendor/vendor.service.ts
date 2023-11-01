@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { error } from 'console';
-import { CreateVendorDto } from 'src/dto/vendor.dto';
-import { VendorClearenceDto } from 'src/dto/vendorClearence.dto'
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateVendorDto } from '../dto/vendor.dto';
+import { VendorClearenceDto } from '../dto/vendorClearence.dto'
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class VendorService {

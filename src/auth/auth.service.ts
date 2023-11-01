@@ -1,10 +1,10 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt'
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt'
-import { CreateUserDto } from 'src/dto/create-users.dto';
-import { ResetPasswordDto } from 'src/dto/reset-password.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateUserDto } from '../dto/create-users.dto';
+import { ResetPasswordDto } from '../dto/reset-password.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 
 @Injectable()

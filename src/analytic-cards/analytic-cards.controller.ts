@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AnalyticCardsService } from './analytic-cards.service';
-import { JwtAuthGaurd } from 'src/auth/jwt-auth.gaurd';
+import { JwtAuthGaurd } from '../auth/jwt-auth.gaurd';
 
 
 

@@ -1,6 +1,6 @@
 import { HttpException, Injectable, NotFoundException, HttpStatus } from '@nestjs/common';
-import { CreateAlertTypeDto } from 'src/dto/alert-type.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateAlertTypeDto } from '../dto/alert-type.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AlertTypeService {

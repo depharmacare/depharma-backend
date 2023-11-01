@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { SalesService } from './sales.service';
-import { CreateSaleDto } from 'src/dto/sale.dto';
-import { JwtAuthGaurd } from 'src/auth/jwt-auth.gaurd';
+import { CreateSaleDto } from '../dto/sale.dto';
+import { JwtAuthGaurd } from '../auth/jwt-auth.gaurd';
 
 @Controller('sales')
 export class SalesController {

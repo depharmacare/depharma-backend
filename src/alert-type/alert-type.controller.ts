@@ -1,6 +1,6 @@
 import { Controller, Get, Put, Post, Delete, Body, Param, HttpException } from '@nestjs/common';
 import { AlertTypeService } from './alert-type.service';
-import { CreateAlertTypeDto } from 'src/dto/alert-type.dto';
+import { CreateAlertTypeDto } from '../dto/alert-type.dto';
 
 @Controller('alert-type')
 export class AlertTypeController {

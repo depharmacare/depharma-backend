@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { InventoryByCategoryService } from './inventory-by-category.service';
 import { InventoryByCategoryController } from './inventory-by-category.controller';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../prisma/prisma.module';
 
 @Module({
   imports: [PrismaModule],

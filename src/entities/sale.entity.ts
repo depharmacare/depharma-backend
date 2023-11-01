@@ -2,7 +2,7 @@ import { SaleItem, Sales as SalesModel } from "@prisma/client";
 
 import { Length, IsNotEmpty, IsArray, ArrayNotEmpty, ValidateNested, IsOptional, IsNumber } from 'class-validator'
 import { Type } from "class-transformer";
-import { CreateSaleItemDto } from "src/dto/sale-item.dto";
+import { CreateSaleItemDto } from "../dto/sale-item.dto";
 import { SaleItemEntity } from "./sale-item.entity";
 
 

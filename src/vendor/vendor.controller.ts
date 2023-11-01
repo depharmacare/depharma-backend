@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, HttpException, HttpStatus, BadRequestException, UseGuards } from '@nestjs/common';
 import { VendorService } from './vendor.service';
-import { CreateVendorDto } from 'src/dto/vendor.dto';
-import { VendorClearenceDto } from 'src/dto/vendorClearence.dto';
-import { JwtAuthGaurd } from 'src/auth/jwt-auth.gaurd';
+import { CreateVendorDto } from '../dto/vendor.dto';
+import { VendorClearenceDto } from '../dto/vendorClearence.dto';
+import { JwtAuthGaurd } from '../auth/jwt-auth.gaurd';
 
 @Controller('vendor')
 export class VendorController {

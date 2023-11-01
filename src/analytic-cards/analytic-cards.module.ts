@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AnalyticCardsController } from './analytic-cards.controller';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../prisma/prisma.module';
 import { AnalyticCardsService } from './analytic-cards.service';
 
 @Module({

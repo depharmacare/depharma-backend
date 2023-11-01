@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, } from '@nestjs/common';
 import { DistributerService } from './distributer.service';
-import { CreateDistributerDto } from 'src/dto/distributer.dto';
-import { JwtAuthGaurd } from 'src/auth/jwt-auth.gaurd';
+import { CreateDistributerDto } from '../dto/distributer.dto';
+import { JwtAuthGaurd } from '../auth/jwt-auth.gaurd';
 
 @Controller('distributer')
 export class DistributerController {
