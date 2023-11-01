@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "builds": [
+	"builds": [
         {
             "src": "src/main.ts",
             "use": "@vercel/node"
@@ -13,8 +13,8 @@
             "methods": [
                 "GET",
                 "POST",
-                "DELETE",
-                "PUT"
+                "PUT",
+                "DELETE"
             ]
         }
     ]
